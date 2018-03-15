@@ -15,6 +15,6 @@ func TestRconf(t *testing.T) {
 	}
 
 	for name, item := range Dconf {
-		t.Log(name, item)
+		t.Log(name, item.ContainerName, item.Exec)
 	}
 }

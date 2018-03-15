@@ -3,26 +3,25 @@ package main
 import (
 	"dbox/errno"
 	"dbox/dconf"
+	"dbox/cmd"
 
 	"github.com/goinbox/golog"
 	"github.com/goinbox/gomisc"
-	"github.com/goinbox/shell"
 
-	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
+	"errors"
 )
 
 func main() {
 	var logLevel int
-	var dconfDir string
+	var dconfPath string
 
 	fs := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 	fs.IntVar(&logLevel, "logLevel", golog.LEVEL_INFO, "global log level")
-	fs.StringVar(&dconfDir, "dconfDir", "", "dbox conf dir")
+	fs.StringVar(&dconfPath, "dconfPath", os.Getenv("HOME")+"/.dconf.json", "dbox conf path")
 	fs.Parse(os.Args[1:])
 
 	logger, err := golog.NewSimpleLogger(golog.NewStdoutWriter(), logLevel, golog.NewConsoleFormater())
@@ -31,122 +30,63 @@ func main() {
 		os.Exit(errno.E_SYS_INIT_LOG_FAIL)
 	}
 
-	dconfDir = strings.TrimRight(dconfDir, "/")
-	if dconfDir == "" {
-		logger.Error([]byte("missing flag dconfDir"))
+	dconfPath = strings.TrimRight(dconfPath, "/")
+	if dconfPath == "" {
+		logger.Error([]byte("missing flag dconfPath"))
 		flag.PrintDefaults()
-		os.Exit(errno.E_SYS_INVALID_RCONF)
+		os.Exit(errno.E_SYS_INVALID_DCONF)
 	}
-	if !gomisc.DirExist(dconfDir) {
-		logger.Error([]byte("dconfDir not exist: " + dconfDir))
-		os.Exit(errno.E_SYS_INVALID_RCONF)
+	if !gomisc.FileExist(dconfPath) {
+		logger.Error([]byte("dconfPath not exist: " + dconfPath))
+		os.Exit(errno.E_SYS_INVALID_DCONF)
 	}
-	logger.Debug([]byte("dconfDir: " + dconfDir))
+	logger.Debug([]byte("dconfPath: " + dconfPath))
 
-	dboxConf, err := initRiggerConf(fs, dconfDir, logger)
+	err = dconf.Init(dconfPath)
 	if err != nil {
-		logger.Error([]byte("initRiggerConf error: " + err.Error()))
-		os.Exit(errno.E_SYS_INVALID_RCONF)
+		logger.Error([]byte("dconf init error: " + err.Error()))
+		os.Exit(errno.E_SYS_INVALID_DCONF)
 	}
 
-	err = genConfByTpl(dboxConf, logger)
+	fargs := fs.Args()
+	cmd, err := getCmd(fargs)
 	if err != nil {
-		logger.Error([]byte("genConfByTpl error: " + err.Error()))
-		os.Exit(errno.E_SYS_INVALID_RCONF)
+		logger.Error([]byte("get cmd error: " + err.Error()))
+		os.Exit(errno.E_DBOX_INVALID_CMD)
+	}
+	dconfItem, err := getDconfItem(fargs)
+	if err != nil {
+		logger.Error([]byte("get dconfItem error: " + err.Error()))
+		os.Exit(errno.E_DBOX_INVALID_CONTAINER_NAME)
 	}
 
-	runAction(dboxConf, logger)
+	cmd.Run(dconfItem, fargs[2:], logger)
 }
 
-func initRiggerConf(fs *flag.FlagSet, dconfDir string, logger golog.ILogger) (*dconf.RiggerConf, error) {
-	extArgs := parseExtArgs(fs.Args())
-	dboxConf, err := dconf.NewRiggerConf(dconfDir, extArgs, logger)
-	if err != nil {
-		return nil, err
+func getCmd(fargs []string) (cmd.ICommand, error) {
+	if len(fargs) == 0 {
+		return nil, errors.New("do not has cmd arg")
 	}
 
-	err = dboxConf.Parse()
-	if err != nil {
-		return nil, err
+	cmdArg := strings.TrimSpace(fargs[0])
+	switch cmdArg {
+	case "exec":
+		return new(cmd.ExecCommand), nil
 	}
 
-	return dboxConf, nil
+	return nil, errors.New("unknown cmd: " + cmdArg)
 }
 
-func parseExtArgs(args []string) map[string]string {
-	result := make(map[string]string)
-
-	for _, str := range args {
-		item := strings.Split(str, "=")
-		if len(item) == 2 {
-			result[item[0]] = item[1]
-		}
+func getDconfItem(fargs []string) (*dconf.DconfItem, error) {
+	if len(fargs) < 2 {
+		return nil, errors.New("do not has containerName arg")
 	}
 
-	return result
-}
-
-func genConfByTpl(dboxConf *dconf.RiggerConf, logger golog.ILogger) error {
-	for key, item := range dboxConf.TplConfItem.Tpls {
-		if !gomisc.FileExist(item.Tpl) {
-			return errors.New("Gen conf " + key + " tpl " + item.Tpl + " not exists")
-		}
-
-		logger.Debug([]byte("gen tpl: " + key))
-		logger.Debug([]byte("read file " + item.Tpl))
-		tplBytes, err := ioutil.ReadFile(item.Tpl)
-		if err != nil {
-			return err
-		}
-
-		dstString, delay, err := dboxConf.VarConfItem.ParseValueByDefined(string(tplBytes))
-		if delay {
-			err = errors.New("must not delay")
-		}
-		if err != nil {
-			return err
-		}
-
-		logger.Debug([]byte("write dst file " + item.Dst))
-		err = ioutil.WriteFile(item.Dst, []byte(dstString), 0644)
-		if err != nil {
-			return err
-		}
-
-		if item.Ln != "" {
-			cmd := ""
-			cmdPrefix := ""
-			if item.Sudo {
-				cmdPrefix += "sudo "
-			}
-			cmd += cmdPrefix + "rm -f " + item.Ln + "; "
-			cmd += cmdPrefix + "ln -s " + item.Dst + " " + item.Ln
-
-			shell.RunCmdBindTerminal(cmd)
-		}
+	containerName := strings.TrimSpace(fargs[1])
+	dconfItem, ok := dconf.Dconf[containerName]
+	if !ok {
+		return nil, errors.New("containerName: " + containerName + " not in dconf")
 	}
 
-	return nil
-}
-
-func runAction(dboxConf *dconf.RiggerConf, logger golog.ILogger) {
-	for _, item := range dboxConf.ActionConfItem.Mkdir {
-		cmd := ""
-		cmdPrefix := ""
-		if item.Sudo {
-			cmdPrefix += "sudo "
-		}
-		if !gomisc.DirExist(item.Dir) {
-			cmd += cmdPrefix + "mkdir -p " + item.Dir + "; "
-		}
-		cmd += cmdPrefix + "chmod " + item.Mask + " " + item.Dir
-
-		logger.Debug([]byte("mkdir run cmd: " + cmd))
-		shell.RunCmdBindTerminal(cmd)
-	}
-
-	for _, cmd := range dboxConf.ActionConfItem.Exec {
-		logger.Debug([]byte("exec run cmd: " + cmd))
-		shell.RunCmdBindTerminal(cmd)
-	}
+	return dconfItem, nil
 }

@@ -4,8 +4,14 @@ import (
 	"github.com/goinbox/gomisc"
 )
 
+type ExecItem struct {
+	ShellCmd string `json:"shell_cmd"`
+	PreCmd   string `json:"pre_cmd"`
+}
+
 type DconfItem struct {
-	ContainerName string `json:"container_name"`
+	ContainerName string    `json:"container_name"`
+	Exec          *ExecItem `json:"exec"`
 }
 
 var Dconf map[string]*DconfItem = make(map[string]*DconfItem)
