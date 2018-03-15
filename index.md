@@ -2,7 +2,7 @@
 
 ## 概述
 
-docker环境开发的配合工具
+配合使用docker作为开发环境的工具
 
 ## 部署
 
@@ -14,11 +14,11 @@ cd dockerbox
 ./deploy/deploy.sh host1 host2 ...
 ```
 
-这会将相关工具安装至目标主机的/usr/local/bin下，并生成常用的dconf.json放到$HOME/.dconf.json
+这会将dbox工具安装至目标主机的/usr/local/bin下，并生成常用的dconf.json放到$HOME/.dconf.json
 
 ## dconf.json
 
-所有工具都依赖于一个全局配置文件dconf.json，它的默认路径放在$HOME/.dconf.json，也可以手动在执行时通过flag参数指定：-dconf=dconfPath
+所有工具都依赖于一个全局配置文件dconf.json，它的默认路径放在$HOME/.dconf.json，也可以手动在执行时通过flag参数指定：-dconfPath=dconfPath
 
 ### 结构解析
 
@@ -73,6 +73,26 @@ dbox -logLevel=${logLevel} -dconfPath=${dconfPath} ${cmd} ${containerKey} args .
 ```
 ligang@vm-centos7 ~ $ dbox exec nginx nginx -v
 nginx version: nginx/1.8.1
+```
+
+还可以直接进入容器中的交互命令行，如：
+
+```
+ligang@vm-centos7 ~ $ dbox exec mysql mysql -uroot -p123
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.9-log Source distribution
+
+Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
 ```
 
 ### attach
