@@ -17,10 +17,15 @@ func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
 		return
 	}
 
+	if dconfItem.Exec == nil {
+		logger.Error([]byte("container: " + dconfItem.ContainerName + " not has exec conf"))
+		return
+	}
+
 	cmd := "docker exec -it " + dconfItem.ContainerName + " "
 	cmd += dconfItem.Exec.ShellCmd + " '"
 	cmd += dconfItem.Exec.PreCmd + ";"
-	cmd += strings.Join(args, " ") + "'"
+	cmd += strings.Join(args[1:], " ") + "'"
 
 	logger.Debug([]byte("cmd: " + cmd))
 

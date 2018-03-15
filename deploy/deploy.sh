@@ -29,12 +29,12 @@ then
 fi
 mkdir -p $deployTmpDir
 
-cd $prjHome/src/rigger
+cd $prjHome/src/dbox
 ./dep.sh ensure
 
-binName=rigger
+binName=dbox
 cd $prjHome/src
-./go.sh build -o ${binName}.bin rigger/main/rigger/main.go 
+./go.sh build -o ${binName}.bin dbox/main/dbox/main.go 
 mv ${binName}.bin $deployTmpDir/$binName
 
 installDstDir=/usr/local/bin
@@ -44,6 +44,7 @@ do
     echo Deploy to $host
     $scpCmd $binName $username@$host:./
     $sshCmd -t $username@$host "echo $password | sudo -S mv $binName $installDstDir"
+    $scpCmd $prjHome/dconf.json.demo $username@$host:./.dconf.json
 done
 
 rm -rf $deployTmpDir
