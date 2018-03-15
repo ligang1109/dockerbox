@@ -1,0 +1,23 @@
+{
+    "nginx": {
+        "container_name": "nginx-1.8.1"
+    },
+    "php": {
+        "container_name": "php-7.1.9"
+    },
+    "mysql": {
+        "container_name": "mysql-5.7.9"
+    },
+    "redis": {
+        "container_name": "redis-4.0.8"
+    },
+    "mongodb": {
+        "container_name": "mongodb-3.4"
+    },
+    "samba": {
+        "container_name": "samba-4.4.16"
+    },
+    "jekyll": {
+        "container_name": "jekyll-latest"
+    }
+}
