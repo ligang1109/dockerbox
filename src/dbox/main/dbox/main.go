@@ -1,18 +1,18 @@
 package main
 
 import (
-	"dbox/errno"
-	"dbox/dconf"
 	"dbox/cmd"
+	"dbox/dconf"
+	"dbox/errno"
 
 	"github.com/goinbox/golog"
 	"github.com/goinbox/gomisc"
 
+	"errors"
 	"flag"
 	"fmt"
 	"os"
 	"strings"
-	"errors"
 )
 
 func main() {
@@ -54,13 +54,8 @@ func main() {
 		logger.Error([]byte("get cmd error: " + err.Error()))
 		os.Exit(errno.E_DBOX_INVALID_CMD)
 	}
-	dconfItem, err := getDconfItem(fargs)
-	if err != nil {
-		logger.Error([]byte("get dconfItem error: " + err.Error()))
-		os.Exit(errno.E_DBOX_INVALID_CONTAINER_NAME)
-	}
 
-	cmd.Run(dconfItem, fargs[2:], logger)
+	cmd.Run(fargs[1:], logger)
 }
 
 func getCmd(fargs []string) (cmd.ICommand, error) {
@@ -72,21 +67,15 @@ func getCmd(fargs []string) (cmd.ICommand, error) {
 	switch cmdArg {
 	case "exec":
 		return new(cmd.ExecCommand), nil
+	case "attach":
+		return new(cmd.AttachCommand), nil
+	case "start":
+		return new(cmd.StartCommand), nil
+	case "stop":
+		return new(cmd.StopCommand), nil
+	case "restart":
+		return new(cmd.RestartCommand), nil
 	}
 
 	return nil, errors.New("unknown cmd: " + cmdArg)
-}
-
-func getDconfItem(fargs []string) (*dconf.DconfItem, error) {
-	if len(fargs) < 2 {
-		return nil, errors.New("do not has containerName arg")
-	}
-
-	containerName := strings.TrimSpace(fargs[1])
-	dconfItem, ok := dconf.Dconf[containerName]
-	if !ok {
-		return nil, errors.New("containerName: " + containerName + " not in dconf")
-	}
-
-	return dconfItem, nil
 }

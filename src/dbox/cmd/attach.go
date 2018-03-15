@@ -3,24 +3,21 @@ package cmd
 import (
 	"github.com/goinbox/golog"
 	"github.com/goinbox/shell"
-
-	"strings"
 )
 
-type ExecCommand struct {
+type AttachCommand struct {
 }
 
-func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
+func (a *AttachCommand) Run(args []string, logger golog.ILogger) {
 	dconfItem, err := getDconfItemFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get dconfItem error: " + err.Error()))
 		return
 	}
 
-	cmd := "docker exec -it " + dconfItem.ContainerName + " "
-	cmd += dconfItem.Exec.ShellCmd + " '"
-	cmd += dconfItem.Exec.PreCmd + ";"
-	cmd += strings.Join(args, " ") + "'"
+	cmd := "sudo nsenter --target `docker inspect --format {{.State.Pid}} "
+	cmd += dconfItem.ContainerName
+	cmd += "` --mount --uts --ipc --net --pid"
 
 	logger.Debug([]byte("cmd: " + cmd))
 

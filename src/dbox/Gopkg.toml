@@ -23,11 +23,11 @@
 
 [[constraint]]
   name = "github.com/goinbox/golog"
-  version = "1.2.1"
+  version = "1.2.2"
 
 [[constraint]]
   name = "github.com/goinbox/gomisc"
-  version = "1.1.0"
+  version = "1.2.0"
 
 [[constraint]]
   name = "github.com/goinbox/shell"
