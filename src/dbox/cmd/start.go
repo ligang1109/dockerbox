@@ -11,13 +11,13 @@ type StartCommand struct {
 }
 
 func (s *StartCommand) Run(args []string, logger golog.ILogger) {
-	containerName, err := getContainerNameFromArgs(args)
+	containerKey, err := getContainerKeyFromArgs(args)
 	if err != nil {
-		logger.Error([]byte("get containerName error: " + err.Error()))
+		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
 	}
 
-	if containerName == SPECIAL_CONTAINER_NAME_ALL {
+	if containerKey == SPECIAL_CONTAINER_KEY_ALL {
 		for _, item := range dconf.Dconf {
 			s.start(item, logger)
 		}
