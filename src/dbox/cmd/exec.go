@@ -23,9 +23,16 @@ func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
 	}
 
 	cmd := "docker exec -it " + dconfItem.ContainerName + " "
-	cmd += dconfItem.Exec.ShellCmd + " '"
-	cmd += dconfItem.Exec.PreCmd + ";"
-	cmd += strings.Join(args[1:], " ") + "'"
+	if dconfItem.Exec.ShellCmd != "" {
+		cmd += dconfItem.Exec.ShellCmd + " '"
+		if dconfItem.Exec.PreCmd != "" {
+			cmd += dconfItem.Exec.PreCmd + ";"
+		}
+	}
+	cmd += strings.Join(args[1:], " ")
+	if dconfItem.Exec.ShellCmd != "" {
+		cmd += "'"
+	}
 
 	logger.Debug([]byte("cmd: " + cmd))
 

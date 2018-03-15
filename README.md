@@ -1,3 +1,3 @@
 # Rigger
 
-[Doc](http://blog.7rule.com/rigger/)
+[Doc](http://blog.7rule.com/dockerbox/)
