@@ -47,22 +47,24 @@ cd dockerbox
 命令格式：
 
 ```
-dbox -logLevel=${logLevel} -dconfPath=${dconfPath} ${cmd} ${containerKey} args ...
+dbox [options] command containerKey args ...
 ```
 
-参数说明：
+当前支持options：
 
 - -logLevel: 可选，值见[logLevel](https://github.com/goinbox/golog/blob/master/base.go)
 
-- -dconfPath：可选参数，放置dconf配置文件的路径，请用绝对路径，默认为：`$HOME/.dconf.json`
+- -dconfPath：可选，放置dconf配置文件的路径，请用绝对路径，默认为：`$HOME/.dconf.json`
 
-- cmd：必选，dbox支持的命令名称
+其他参数：
 
-- containerKey：必选，dconf中的容器key
+- command：必选，dbox支持的命令名称
+
+- containerKey：必选，dconf中的容器key，`all`为全部key
 
 - args：可选，指定cmd的额外args
 
-## 支持的命令
+## command说明
 
 ### exec
 
