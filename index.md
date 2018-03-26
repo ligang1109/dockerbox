@@ -126,8 +126,8 @@ hello, world
 容器中实际执行了：
 
 ```
-ligang@vm-centos7 ~/tmp/php $ dbox -logLevel=1 exec php php $PWD/test.php 
-[debug] [2018-03-26 12:21:10]   cmd: docker exec -it php-7.1.9 bash -c 'cd /home/ligang/tmp/php;source ~/.bashrc;php /home/ligang/tmp/php/test.php'
+ligang@vm-centos7 ~/tmp/php $ dbox -logLevel=1 exec php php test.php 
+[debug] [2018-03-26 12:21:10]   cmd: docker exec -it php-7.1.9 bash -c 'cd /home/ligang/tmp/php;source ~/.bashrc;php test.php'
 ```
 
 是不是方便了很多！
