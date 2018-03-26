@@ -36,6 +36,7 @@ cd dockerbox
         "container_name": "php-7.1.9",
         "exec": {
             "shell_cmd": "bash -c",
+            "cwd": true,                   //执行命令前先cd到执行dbox命令的目录，下面有示例说明
             "pre_cmd": "source ~/.bashrc"
         }
     }
@@ -96,6 +97,40 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql> 
 ```
+
+这里用一个实际运用场景来说明下cwd这个配置：
+
+我开发的php程序放在一个路径下：
+
+```
+ligang@vm-centos7 ~/tmp/php $ ls
+test.php
+ligang@vm-centos7 ~/tmp/php $ pwd
+/home/ligang/tmp/php
+```
+
+如果我想从容器外面调试这个test.php代码，要使用命令：
+
+```
+ligang@vm-centos7 ~/tmp/php $ dbox exec php php $PWD/test.php 
+hello, world
+```
+
+当配置了cwd这一项后，就可以省掉$PWD这个路径了：
+
+```
+ligang@vm-centos7 ~/tmp/php $ dbox exec php php test.php 
+hello, world
+```
+
+容器中实际执行了：
+
+```
+ligang@vm-centos7 ~/tmp/php $ dbox -logLevel=1 exec php php $PWD/test.php 
+[debug] [2018-03-26 12:21:10]   cmd: docker exec -it php-7.1.9 bash -c 'cd /home/ligang/tmp/php;source ~/.bashrc;php /home/ligang/tmp/php/test.php'
+```
+
+是不是方便了很多！
 
 ### attach
 
