@@ -4,6 +4,7 @@ import (
 	"github.com/goinbox/golog"
 	"github.com/goinbox/shell"
 
+	"os"
 	"strings"
 )
 
@@ -25,6 +26,14 @@ func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
 	cmd := "docker exec -it " + dconfItem.ContainerName + " "
 	if dconfItem.Exec.ShellCmd != "" {
 		cmd += dconfItem.Exec.ShellCmd + " '"
+		if dconfItem.Exec.Cwd == true {
+			dir, err := os.Getwd()
+			if err != nil {
+				logger.Error([]byte("container: " + dconfItem.ContainerName + " getwd error: " + err.Error()))
+				return
+			}
+			cmd += "cd " + dir + ";"
+		}
 		if dconfItem.Exec.PreCmd != "" {
 			cmd += dconfItem.Exec.PreCmd + ";"
 		}

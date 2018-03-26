@@ -10,6 +10,7 @@
         "container_name": "php-7.1.9",
         "exec": {
             "shell_cmd": "bash -c",
+            "cwd": true,
             "pre_cmd": "source ~/.bashrc"
         }
     },

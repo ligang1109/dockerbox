@@ -6,6 +6,7 @@ import (
 
 type ExecItem struct {
 	ShellCmd string `json:"shell_cmd"`
+	Cwd      bool   `json:"cwd"`
 	PreCmd   string `json:"pre_cmd"`
 }
 
