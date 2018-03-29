@@ -203,6 +203,39 @@ nginx-1.8.1
 nginx-1.8.1
 ```
 
+### rm
+
+用途：删除容器
+
+示例:
+```
+ligang@vm-centos7 ~ $ dbox rm nginx
+[warning]	[2018-03-29 16:43:43]	rm container: nginx-1.8.1
+nginx-1.8.1
+```
+
+### rmi
+
+用途：删除容器及容器使用的镜像
+
+示例:
+```
+ligang@vm-centos7 ~ $ dbox rmi nginx
+[warning]	[2018-03-29 16:46:30]	rm container: nginx-1.8.1
+nginx-1.8.1
+[warning]	[2018-03-29 16:46:30]	rmi image: nginx-1.8.1
+Untagged: andals/nginx:1.8.1
+Deleted: sha256:ccc9c3c7f1a54910964b05bd68c9b8d88847dbcbdb9da203ba24ae7630f5f00d
+Deleted: sha256:a7df818e38f0a6cabfb939b634ad57914a27393fd5f6f13d435a521802a3da25
+Deleted: sha256:23e59bec3f189dcbfc4d8cc1cbaf75b829f9bbe26ffbfd799c4ed32e9051f794
+Deleted: sha256:b768a6f4cc91e7409d663b8a2f97e361bbe76210bc0d6ed3519319611ecab9f6
+Deleted: sha256:03c749ca45f33d140deffa43e24663a8ed6858fdb00704fd23f4e758221b4221
+Deleted: sha256:fcb5068ea905daaaafc83b9bbce878e0222c2657fb9e1b983bad342534604a1d
+Deleted: sha256:1ff0f8993b098be3071ae9b2c61caad17f2ce501765f195c0accaf47dd32793b
+Deleted: sha256:33c294a729df0e7dfa538a348b3b4d31cc626e75c2b8bf099b6642eb05debcc7
+Deleted: sha256:7dcecd60fc0bb263dc0b38d14c3a367cea6b0a8e91deb4bcbd31256050db7ea0
+```
+
 #### 特别说明
 
-使用start、stop、restart这几个命令时，如果containerKey为`all`，则取dconf中的全部key执行操作
+使用start、stop、restart、rm、rmi这几个命令时，如果containerKey为`all`，则取dconf中的全部key执行操作
