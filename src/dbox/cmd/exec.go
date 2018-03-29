@@ -8,11 +8,23 @@ import (
 	"strings"
 )
 
+const (
+	CMD_NAME_EXEC = "exec"
+)
+
+func init() {
+	Register(CMD_NAME_EXEC, newExecCommand)
+}
+
+func newExecCommand() ICommand {
+	return new(ExecCommand)
+}
+
 type ExecCommand struct {
 }
 
 func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
-	dconfItem, err := getDconfItemFromArgs(args)
+	dconfItem, err := DconfItemFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get dconfItem error: " + err.Error()))
 		return

@@ -7,11 +7,23 @@ import (
 	"github.com/goinbox/shell"
 )
 
+const (
+	CMD_NAME_STOP = "stop"
+)
+
+func init() {
+	Register(CMD_NAME_STOP, newStopCommand)
+}
+
+func newStopCommand() ICommand {
+	return new(StopCommand)
+}
+
 type StopCommand struct {
 }
 
 func (s *StopCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := getContainerKeyFromArgs(args)
+	containerKey, err := ContainerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -22,7 +34,7 @@ func (s *StopCommand) Run(args []string, logger golog.ILogger) {
 			s.stop(item, logger)
 		}
 	} else {
-		item, err := getDconfItemFromArgs(args)
+		item, err := DconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

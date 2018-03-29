@@ -7,11 +7,23 @@ import (
 	"github.com/goinbox/shell"
 )
 
+const (
+	CMD_NAME_START = "start"
+)
+
+func init() {
+	Register(CMD_NAME_START, newStartCommand)
+}
+
+func newStartCommand() ICommand {
+	return new(StartCommand)
+}
+
 type StartCommand struct {
 }
 
 func (s *StartCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := getContainerKeyFromArgs(args)
+	containerKey, err := ContainerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -22,7 +34,7 @@ func (s *StartCommand) Run(args []string, logger golog.ILogger) {
 			s.start(item, logger)
 		}
 	} else {
-		item, err := getDconfItemFromArgs(args)
+		item, err := DconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

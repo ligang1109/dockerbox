@@ -9,11 +9,23 @@ import (
 	"regexp"
 )
 
+const (
+	CMD_NAME_RMI = "rmi"
+)
+
+func init() {
+	Register(CMD_NAME_RMI, newRmiCommand)
+}
+
+func newRmiCommand() ICommand {
+	return new(RmiCommand)
+}
+
 type RmiCommand struct {
 }
 
 func (r *RmiCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := getContainerKeyFromArgs(args)
+	containerKey, err := ContainerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -24,7 +36,7 @@ func (r *RmiCommand) Run(args []string, logger golog.ILogger) {
 			r.rmi(item, logger)
 		}
 	} else {
-		item, err := getDconfItemFromArgs(args)
+		item, err := DconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

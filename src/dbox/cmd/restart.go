@@ -6,11 +6,23 @@ import (
 	"github.com/goinbox/golog"
 )
 
+const (
+	CMD_NAME_RESTART = "restart"
+)
+
+func init() {
+	Register(CMD_NAME_RESTART, newRestartCommand)
+}
+
+func newRestartCommand() ICommand {
+	return new(RestartCommand)
+}
+
 type RestartCommand struct {
 }
 
 func (s *RestartCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := getContainerKeyFromArgs(args)
+	containerKey, err := ContainerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -21,7 +33,7 @@ func (s *RestartCommand) Run(args []string, logger golog.ILogger) {
 			s.restart(name, []string{name}, logger)
 		}
 	} else {
-		_, err := getDconfItemFromArgs(args)
+		_, err := DconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

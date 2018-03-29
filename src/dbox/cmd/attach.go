@@ -5,11 +5,23 @@ import (
 	"github.com/goinbox/shell"
 )
 
+const (
+	CMD_NAME_ATTACH = "attach"
+)
+
+func init() {
+	Register(CMD_NAME_ATTACH, newAttachCommand)
+}
+
+func newAttachCommand() ICommand {
+	return new(AttachCommand)
+}
+
 type AttachCommand struct {
 }
 
 func (a *AttachCommand) Run(args []string, logger golog.ILogger) {
-	dconfItem, err := getDconfItemFromArgs(args)
+	dconfItem, err := DconfItemFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get dconfItem error: " + err.Error()))
 		return

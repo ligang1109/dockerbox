@@ -2,7 +2,7 @@ package cmd
 
 import "testing"
 
-func TestRm(t *testing.T) {
+func TestRmCommand(t *testing.T) {
 	cmd := new(RmCommand)
 	cmd.Run([]string{"redis"}, tlogger)
 }

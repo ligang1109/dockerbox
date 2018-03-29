@@ -6,5 +6,5 @@ import (
 
 func TestAttach(t *testing.T) {
 	cmd := new(AttachCommand)
-	cmd.Run([]string{"mysql"}, tlogger)
+	cmd.Run([]string{"redis"}, tlogger)
 }
