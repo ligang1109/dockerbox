@@ -17,6 +17,27 @@ type ICommand interface {
 	Run(args []string, logger golog.ILogger)
 }
 
+func NewCommandByName(name string) ICommand {
+	switch name {
+	case "exec":
+		return new(ExecCommand)
+	case "attach":
+		return new(AttachCommand)
+	case "start":
+		return new(StartCommand)
+	case "stop":
+		return new(StopCommand)
+	case "restart":
+		return new(RestartCommand)
+	case "rm":
+		return new(RmCommand)
+	case "rmi":
+		return new(RmiCommand)
+	}
+
+	return nil
+}
+
 func getContainerKeyFromArgs(args []string) (string, error) {
 	if len(args) == 0 {
 		return "", errors.New("do not has containerKey arg")

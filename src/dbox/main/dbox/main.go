@@ -8,7 +8,6 @@ import (
 	"github.com/goinbox/golog"
 	"github.com/goinbox/gomisc"
 
-	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -49,33 +48,17 @@ func main() {
 	}
 
 	fargs := fs.Args()
-	cmd, err := getCmd(fargs)
-	if err != nil {
-		logger.Error([]byte("get cmd error: " + err.Error()))
+	if len(fargs) == 0 {
+		logger.Error([]byte("do not has cmd arg"))
 		os.Exit(errno.E_DBOX_INVALID_CMD)
 	}
 
-	cmd.Run(fargs[1:], logger)
-}
-
-func getCmd(fargs []string) (cmd.ICommand, error) {
-	if len(fargs) == 0 {
-		return nil, errors.New("do not has cmd arg")
+	name := strings.TrimSpace(fargs[0])
+	command := cmd.NewCommandByName(name)
+	if command == nil {
+		logger.Error([]byte("unknown cmd: " + name))
+		os.Exit(errno.E_DBOX_INVALID_CMD)
 	}
 
-	cmdArg := strings.TrimSpace(fargs[0])
-	switch cmdArg {
-	case "exec":
-		return new(cmd.ExecCommand), nil
-	case "attach":
-		return new(cmd.AttachCommand), nil
-	case "start":
-		return new(cmd.StartCommand), nil
-	case "stop":
-		return new(cmd.StopCommand), nil
-	case "restart":
-		return new(cmd.RestartCommand), nil
-	}
-
-	return nil, errors.New("unknown cmd: " + cmdArg)
+	command.Run(fargs[1:], logger)
 }
