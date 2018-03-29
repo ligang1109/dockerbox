@@ -12,7 +12,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_RM, newRmCommand)
+	register(CMD_NAME_RM, newRmCommand)
 }
 
 func newRmCommand() ICommand {
@@ -23,7 +23,7 @@ type RmCommand struct {
 }
 
 func (r *RmCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := ContainerKeyFromArgs(args)
+	containerKey, err := containerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -34,7 +34,7 @@ func (r *RmCommand) Run(args []string, logger golog.ILogger) {
 			r.rm(item, logger)
 		}
 	} else {
-		item, err := DconfItemFromArgs(args)
+		item, err := dconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

@@ -10,7 +10,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_ATTACH, newAttachCommand)
+	register(CMD_NAME_ATTACH, newAttachCommand)
 }
 
 func newAttachCommand() ICommand {
@@ -21,7 +21,7 @@ type AttachCommand struct {
 }
 
 func (a *AttachCommand) Run(args []string, logger golog.ILogger) {
-	dconfItem, err := DconfItemFromArgs(args)
+	dconfItem, err := dconfItemFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get dconfItem error: " + err.Error()))
 		return

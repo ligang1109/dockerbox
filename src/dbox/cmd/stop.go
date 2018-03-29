@@ -12,7 +12,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_STOP, newStopCommand)
+	register(CMD_NAME_STOP, newStopCommand)
 }
 
 func newStopCommand() ICommand {
@@ -23,7 +23,7 @@ type StopCommand struct {
 }
 
 func (s *StopCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := ContainerKeyFromArgs(args)
+	containerKey, err := containerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -34,7 +34,7 @@ func (s *StopCommand) Run(args []string, logger golog.ILogger) {
 			s.stop(item, logger)
 		}
 	} else {
-		item, err := DconfItemFromArgs(args)
+		item, err := dconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

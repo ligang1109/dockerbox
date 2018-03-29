@@ -13,7 +13,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_EXEC, newExecCommand)
+	register(CMD_NAME_EXEC, newExecCommand)
 }
 
 func newExecCommand() ICommand {
@@ -24,7 +24,7 @@ type ExecCommand struct {
 }
 
 func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
-	dconfItem, err := DconfItemFromArgs(args)
+	dconfItem, err := dconfItemFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get dconfItem error: " + err.Error()))
 		return

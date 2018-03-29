@@ -17,11 +17,11 @@ type ICommand interface {
 	Run(args []string, logger golog.ILogger)
 }
 
-type NewCommandFunc func() ICommand
+type newCommandFunc func() ICommand
 
-var commandTable = make(map[string]NewCommandFunc)
+var commandTable = make(map[string]newCommandFunc)
 
-func Register(name string, ncf NewCommandFunc) {
+func register(name string, ncf newCommandFunc) {
 	commandTable[name] = ncf
 }
 
@@ -34,7 +34,7 @@ func NewCommandByName(name string) ICommand {
 	return ncf()
 }
 
-func ContainerKeyFromArgs(args []string) (string, error) {
+func containerKeyFromArgs(args []string) (string, error) {
 	if len(args) == 0 {
 		return "", errors.New("do not has containerKey arg")
 	}
@@ -42,8 +42,8 @@ func ContainerKeyFromArgs(args []string) (string, error) {
 	return strings.TrimSpace(args[0]), nil
 }
 
-func DconfItemFromArgs(args []string) (*dconf.DconfItem, error) {
-	containerKey, err := ContainerKeyFromArgs(args)
+func dconfItemFromArgs(args []string) (*dconf.DconfItem, error) {
+	containerKey, err := containerKeyFromArgs(args)
 	if err != nil {
 		return nil, err
 	}

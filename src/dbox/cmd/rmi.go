@@ -14,7 +14,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_RMI, newRmiCommand)
+	register(CMD_NAME_RMI, newRmiCommand)
 }
 
 func newRmiCommand() ICommand {
@@ -25,7 +25,7 @@ type RmiCommand struct {
 }
 
 func (r *RmiCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := ContainerKeyFromArgs(args)
+	containerKey, err := containerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -36,7 +36,7 @@ func (r *RmiCommand) Run(args []string, logger golog.ILogger) {
 			r.rmi(item, logger)
 		}
 	} else {
-		item, err := DconfItemFromArgs(args)
+		item, err := dconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

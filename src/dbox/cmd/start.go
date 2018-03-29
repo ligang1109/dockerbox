@@ -12,7 +12,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_START, newStartCommand)
+	register(CMD_NAME_START, newStartCommand)
 }
 
 func newStartCommand() ICommand {
@@ -23,7 +23,7 @@ type StartCommand struct {
 }
 
 func (s *StartCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := ContainerKeyFromArgs(args)
+	containerKey, err := containerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -34,7 +34,7 @@ func (s *StartCommand) Run(args []string, logger golog.ILogger) {
 			s.start(item, logger)
 		}
 	} else {
-		item, err := DconfItemFromArgs(args)
+		item, err := dconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return

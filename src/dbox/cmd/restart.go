@@ -11,7 +11,7 @@ const (
 )
 
 func init() {
-	Register(CMD_NAME_RESTART, newRestartCommand)
+	register(CMD_NAME_RESTART, newRestartCommand)
 }
 
 func newRestartCommand() ICommand {
@@ -22,7 +22,7 @@ type RestartCommand struct {
 }
 
 func (s *RestartCommand) Run(args []string, logger golog.ILogger) {
-	containerKey, err := ContainerKeyFromArgs(args)
+	containerKey, err := containerKeyFromArgs(args)
 	if err != nil {
 		logger.Error([]byte("get containerKey error: " + err.Error()))
 		return
@@ -33,7 +33,7 @@ func (s *RestartCommand) Run(args []string, logger golog.ILogger) {
 			s.restart(name, []string{name}, logger)
 		}
 	} else {
-		_, err := DconfItemFromArgs(args)
+		_, err := dconfItemFromArgs(args)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return
