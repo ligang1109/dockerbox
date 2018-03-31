@@ -44,7 +44,7 @@ do
     echo Deploy to $host
     $scpCmd $binName $username@$host:./
     $sshCmd -t $username@$host "echo $password | sudo -S mv $binName $installDstDir"
-    $scpCmd $prjHome/dconf.json.demo $username@$host:./.dconf.json
+#    $scpCmd $prjHome/dconf.json.demo $username@$host:./.dconf.json
 done
 
 rm -rf $deployTmpDir
