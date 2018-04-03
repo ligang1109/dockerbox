@@ -134,8 +134,6 @@ ligang@vm-centos7 ~/tmp/php $ dbox -logLevel=1 exec php php test.php
 
 ### attach
 
-需要先安装[nsenter](http://man7.org/linux/man-pages/man1/nsenter.1.html)
-
 用途：进入指定容器，多终端不会相互影响
 
 示例:
