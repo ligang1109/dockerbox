@@ -27,9 +27,7 @@ func (a *AttachCommand) Run(args []string, logger golog.ILogger) {
 		return
 	}
 
-	cmd := "sudo nsenter --target `docker inspect --format {{.State.Pid}} "
-	cmd += dconfItem.ContainerName
-	cmd += "` --mount --uts --ipc --net --pid"
+	cmd := "docker exec -it " + dconfItem.ContainerName + " /bin/bash"
 
 	logger.Debug([]byte("cmd: " + cmd))
 
