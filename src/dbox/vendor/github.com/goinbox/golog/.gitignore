@@ -1,0 +1,9 @@
+*.swp
+*.swo
+
+tags
+
+.idea
+*.iml
+
+.arcconfig
