@@ -35,7 +35,7 @@ func (e *ExecCommand) Run(args []string, logger golog.ILogger) {
 		return
 	}
 
-	cmd := "docker exec -it " + dconfItem.ContainerName + " "
+	cmd := "docker exec -it -e LINES=`tput lines` -e COLUMNS=`tput cols` " + dconfItem.ContainerName + " "
 	if dconfItem.Exec.ShellCmd != "" {
 		cmd += dconfItem.Exec.ShellCmd + " '"
 		if dconfItem.Exec.Cwd == true {

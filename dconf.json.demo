@@ -6,6 +6,20 @@
             "pre_cmd": "source ~/.bashrc"
         }
     },
+    "mariadb": {
+        "container_name": "mariadb-10.2.14",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "pre_cmd": "source ~/.bashrc"
+        }
+    },
+    "redis": {
+        "container_name": "redis-4.0.8",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "pre_cmd": "source ~/.bashrc"
+        }
+    },
     "php": {
         "container_name": "php-7.1.9",
         "exec": {

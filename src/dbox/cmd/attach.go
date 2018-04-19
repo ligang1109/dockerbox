@@ -27,7 +27,7 @@ func (a *AttachCommand) Run(args []string, logger golog.ILogger) {
 		return
 	}
 
-	cmd := "docker exec -it " + dconfItem.ContainerName + " /bin/bash"
+	cmd := "docker exec -it -e LINES=`tput lines` -e COLUMNS=`tput cols` " + dconfItem.ContainerName + " /bin/bash"
 
 	logger.Debug([]byte("cmd: " + cmd))
 
