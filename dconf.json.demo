@@ -62,5 +62,12 @@
             "shell_cmd": "bash -c",
             "pre_cmd": "source ~/.bashrc"
         }
+    },
+    "es": {
+        "container_name": "es-6.3.1",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "pre_cmd": "source ~/.bashrc"
+        }
     }
 }
