@@ -6,13 +6,6 @@
             "pre_cmd": "source ~/.bashrc"
         }
     },
-    "mariadb": {
-        "container_name": "mariadb-10.2.14",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
     "redis": {
         "container_name": "redis-4.0.8",
         "exec": {
@@ -28,8 +21,32 @@
             "pre_cmd": "source ~/.bashrc"
         }
     },
+    "python": {
+        "container_name": "python-multi",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "cwd": true,
+            "pre_cmd": "source ~/.bashrc"
+        }
+    },
+    "rabbitmq": {
+        "container_name": "rabbitmq-3.8.1",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "cwd": true,
+            "pre_cmd": "source ~/.bashrc"
+        }
+    },
+    "memcache": {
+        "container_name": "memcache-1.4.25",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "cwd": true,
+            "pre_cmd": "source ~/.bashrc"
+        }
+    },
     "mysql": {
-        "container_name": "mysql-5.7.9",
+        "container_name": "mysql-mariadb-10.2.14",
         "exec": {
             "shell_cmd": "bash -c",
             "pre_cmd": "source ~/.bashrc"

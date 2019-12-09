@@ -9,7 +9,6 @@ import (
 	"github.com/goinbox/gomisc"
 
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 )
@@ -23,11 +22,8 @@ func main() {
 	fs.StringVar(&dconfPath, "dconfPath", os.Getenv("HOME")+"/.dconf.json", "dbox conf path")
 	fs.Parse(os.Args[1:])
 
-	logger, err := golog.NewSimpleLogger(golog.NewStdoutWriter(), logLevel, golog.NewConsoleFormater())
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(errno.E_SYS_INIT_LOG_FAIL)
-	}
+	logger := golog.NewSimpleLogger(golog.NewConsoleWriter(), golog.NewConsoleFormater(golog.NewSimpleFormater())).
+		SetLogLevel(logLevel)
 
 	dconfPath = strings.TrimRight(dconfPath, "/")
 	if dconfPath == "" {
@@ -41,7 +37,7 @@ func main() {
 	}
 	logger.Debug([]byte("dconfPath: " + dconfPath))
 
-	err = dconf.Init(dconfPath)
+	err := dconf.Init(dconfPath)
 	if err != nil {
 		logger.Error([]byte("dconf init error: " + err.Error()))
 		os.Exit(errno.E_SYS_INVALID_DCONF)

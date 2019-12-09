@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
+//export DCONF_PATH=/Users/gibsonli/devspace/personal/dockerbox/dconf.json.demo ;go test -v
 func TestRconf(t *testing.T) {
-	prjHome := os.Getenv("GOPATH")
-	dconfPath := prjHome + "/dconf.json.demo"
+	dconfPath := os.Getenv("DCONF_PATH")
 
 	err := Init(dconfPath)
 	if err != nil {
