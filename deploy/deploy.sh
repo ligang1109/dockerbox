@@ -29,12 +29,9 @@ then
 fi
 mkdir -p $deployTmpDir
 
-cd $prjHome/src/dbox
-./dep.sh ensure
-
 binName=dbox
-cd $prjHome/src
-./go.sh build -o ${binName}.bin dbox/main/dbox/main.go 
+cd $prjHome/dbox/main/dbox
+go build -o ${binName}.bin main.go 
 mv ${binName}.bin $deployTmpDir/$binName
 
 installDstDir=/usr/local/bin
