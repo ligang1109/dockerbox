@@ -4,5 +4,5 @@ github.com/goinbox/golog v2.1.2+incompatible h1:hYK/gJWRtSIaQpAEd6oUe7VIOAQZb5rZ
 github.com/goinbox/golog v2.1.2+incompatible/go.mod h1:LpDh2j8NT1DzCFjkpE3joekJWaVxUt+BolHh52GJqtA=
 github.com/goinbox/gomisc v1.2.0 h1:T1CHnG8yxUzQIzTJWReqEKfTlZ5krj1UULXO+yi3WiE=
 github.com/goinbox/gomisc v1.2.0/go.mod h1:SPnA6bKoY+HIxNBbO2zRX0jBHu0lmi3nCLbZR40aiSs=
-github.com/goinbox/shell v1.0.0 h1:lw4V4KneIBKIrdqPSbv1wzydZNVt9bz15o2iczatW5o=
-github.com/goinbox/shell v1.0.0/go.mod h1:IyI0IduiVW7mbDvplU945+vawjFlMUBbuqbMzGOPHEM=
+github.com/goinbox/shell v1.0.1 h1:2lY1MYSpqVODbh18/KISm09VoVyCvn8hYFYN0oI0w/U=
+github.com/goinbox/shell v1.0.1/go.mod h1:IyI0IduiVW7mbDvplU945+vawjFlMUBbuqbMzGOPHEM=

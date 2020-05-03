@@ -37,8 +37,8 @@
             "pre_cmd": "source ~/.bashrc"
         }
     },
-    "memcache": {
-        "container_name": "memcache-1.4.25",
+    "rocketmq": {
+        "container_name": "rocketmq-4.6.0",
         "exec": {
             "shell_cmd": "bash -c",
             "cwd": true,
@@ -46,7 +46,7 @@
         }
     },
     "mysql": {
-        "container_name": "mysql-mariadb-10.2.14",
+        "container_name": "mysql-5.7.28",
         "exec": {
             "shell_cmd": "bash -c",
             "pre_cmd": "source ~/.bashrc"
