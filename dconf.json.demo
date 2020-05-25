@@ -52,13 +52,6 @@
             "pre_cmd": "source ~/.bashrc"
         }
     },
-    "redis": {
-        "container_name": "redis-4.0.8",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
     "mongodb": {
         "container_name": "mongodb-3.4",
         "exec": {
