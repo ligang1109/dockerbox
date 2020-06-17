@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-//export DCONF_PATH=/Users/gibsonli/devspace/personal/dockerbox/dconf.json.demo ;go test -v
+//export DCONF_PATH=/Users/gibsonli/devspace/personal/dockerbox/dconf_demo.json ;go test -v
 func TestRconf(t *testing.T) {
 	dconfPath := os.Getenv("DCONF_PATH")
 
@@ -15,6 +15,6 @@ func TestRconf(t *testing.T) {
 	}
 
 	for name, item := range Dconf {
-		t.Log(name, item.ContainerName, item.Exec)
+		t.Log(name, item.ContainerName, item.Exec, item.Start)
 	}
 }

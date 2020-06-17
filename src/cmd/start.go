@@ -34,7 +34,7 @@ func (s *StartCommand) Run(args []string, logger golog.ILogger) {
 			s.start(item, logger)
 		}
 	} else {
-		item, err := dconfItemFromArgs(args)
+		item, err := dconfItemFromContainerKey(containerKey)
 		if err != nil {
 			logger.Error([]byte("get dconfItem error: " + err.Error()))
 			return
@@ -45,6 +45,18 @@ func (s *StartCommand) Run(args []string, logger golog.ILogger) {
 }
 
 func (s *StartCommand) start(dconfItem *dconf.DconfItem, logger golog.ILogger) {
+	if dconfItem.Start != nil {
+		for _, containerKey := range dconfItem.Start.PreStart {
+			item, err := dconfItemFromContainerKey(containerKey)
+			if err != nil {
+				logger.Error([]byte("get dconfItem error: " + err.Error()))
+				return
+			}
+
+			s.start(item, logger)
+		}
+	}
+
 	cmd := "docker start " + dconfItem.ContainerName
 
 	logger.Warning([]byte("start container: " + dconfItem.ContainerName))

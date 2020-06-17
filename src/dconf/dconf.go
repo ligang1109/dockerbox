@@ -10,9 +10,14 @@ type ExecItem struct {
 	PreCmd   string `json:"pre_cmd"`
 }
 
+type StartItem struct {
+	PreStart []string `json:"pre_start"`
+}
+
 type DconfItem struct {
-	ContainerName string    `json:"container_name"`
-	Exec          *ExecItem `json:"exec"`
+	ContainerName string     `json:"container_name"`
+	Exec          *ExecItem  `json:"exec"`
+	Start         *StartItem `json:"start"`
 }
 
 var Dconf map[string]*DconfItem = make(map[string]*DconfItem)

@@ -42,16 +42,20 @@ func containerKeyFromArgs(args []string) (string, error) {
 	return strings.TrimSpace(args[0]), nil
 }
 
-func dconfItemFromArgs(args []string) (*dconf.DconfItem, error) {
-	containerKey, err := containerKeyFromArgs(args)
-	if err != nil {
-		return nil, err
-	}
-
+func dconfItemFromContainerKey(containerKey string) (*dconf.DconfItem, error) {
 	dconfItem, ok := dconf.Dconf[containerKey]
 	if !ok {
 		return nil, errors.New("containerKey: " + containerKey + " not in dconf")
 	}
 
 	return dconfItem, nil
+}
+
+func dconfItemFromArgs(args []string) (*dconf.DconfItem, error) {
+	containerKey, err := containerKeyFromArgs(args)
+	if err != nil {
+		return nil, err
+	}
+
+	return dconfItemFromContainerKey(containerKey)
 }
