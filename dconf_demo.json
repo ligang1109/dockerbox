@@ -1,97 +1,52 @@
 {
     "nginx": {
-        "container_name": "nginx-1.80.0",
+        "container_name": "nginx-1.18.0",
         "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
+            "shell_cmd": "bash -c"
+        }
+    },
+    "mariadb": {
+        "container_name": "mariadb-10.5.9",
+        "exec": {
+            "shell_cmd": "bash -c"
         }
     },
     "redis": {
         "container_name": "redis-6.2.1",
         "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
+            "shell_cmd": "bash -c"
         }
     },
     "php": {
-        "container_name": "php-7.4.16",
+        "container_name": "php-7.4.20",
         "exec": {
             "shell_cmd": "bash -c",
-            "cwd": true,
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "python": {
-        "container_name": "python-multi",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "cwd": true,
-            "pre_cmd": "source ~/.bashrc"
+            "cwd": true
         }
     },
     "rabbitmq": {
         "container_name": "rabbitmq-3.8.1",
         "exec": {
             "shell_cmd": "bash -c",
-            "cwd": true,
-            "pre_cmd": "source ~/.bashrc"
+            "cwd": true
         }
     },
-    "rocketmq": {
-        "container_name": "rocketmq-4.6.0",
+    "cpp": {
+        "container_name": "cpp-latest",
         "exec": {
-            "shell_cmd": "bash -c",
-            "cwd": true,
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "mariadb": {
-        "container_name": "mariadb-10.5.9",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "mysql": {
-        "container_name": "mysql-5.7.28",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "mongodb": {
-        "container_name": "mongodb-3.4",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "samba": {
-        "container_name": "samba-4.4.16",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "jekyll": {
-        "container_name": "jekyll-latest",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
-        }
-    },
-    "v2ray": {
-        "container_name": "v2ray-4.33.0",
-        "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
+            "shell_cmd": "bash -c"
         }
     },
     "es": {
         "container_name": "es-6.3.1",
         "exec": {
-            "shell_cmd": "bash -c",
-            "pre_cmd": "source ~/.bashrc"
+            "shell_cmd": "bash -c"
+        }
+    },
+    "demo": {
+        "container_name": "demo-latest",
+        "exec": {
+            "shell_cmd": "bash -c"
         }
     }
 }
