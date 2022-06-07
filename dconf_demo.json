@@ -1,31 +1,59 @@
 {
     "nginx": {
-        "container_name": "nginx-1.18.0",
+        "container_name": "nginx",
         "exec": {
-            "shell_cmd": "bash -c"
+            "shell_cmd": "sh -c"
         }
     },
-    "mariadb": {
-        "container_name": "mariadb-10.5.9",
+    "mysql": {
+        "container_name": "mysql",
         "exec": {
             "shell_cmd": "bash -c"
         }
     },
     "redis": {
-        "container_name": "redis-6.2.1",
+        "container_name": "redis",
         "exec": {
-            "shell_cmd": "bash -c"
+            "shell_cmd": "sh -c"
         }
     },
     "php": {
-        "container_name": "php-7.4.20",
+        "container_name": "php",
+        "exec": {
+            "shell_cmd": "sh -c",
+            "cwd": true
+        }
+    },
+    "rabbitmq": {
+        "container_name": "rabbitmq",
+        "exec": {
+            "shell_cmd": "sh -c",
+            "cwd": true
+        }
+    },
+    "memcache": {
+        "container_name": "memcache-1.4.25",
         "exec": {
             "shell_cmd": "bash -c",
             "cwd": true
         }
     },
-    "rabbitmq": {
-        "container_name": "rabbitmq-3.8.1",
+    "lpgz": {
+        "container_name": "lightpower-gz",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "cwd": true
+        }
+    },
+    "lpsg": {
+        "container_name": "lightpower-sg",
+        "exec": {
+            "shell_cmd": "bash -c",
+            "cwd": true
+        }
+    },
+    "lhapi": {
+        "container_name": "lhapi-latest",
         "exec": {
             "shell_cmd": "bash -c",
             "cwd": true
@@ -45,6 +73,18 @@
     },
     "demo": {
         "container_name": "demo-latest",
+        "exec": {
+            "shell_cmd": "bash -c"
+        }
+    },
+    "prometheus": {
+        "container_name": "prometheus-2.27.1",
+        "exec": {
+            "shell_cmd": "bash -c"
+        }
+    },
+    "k8s-client": {
+        "container_name": "k8s-client-latest",
         "exec": {
             "shell_cmd": "bash -c"
         }
